@@ -8,7 +8,11 @@ import SwiftUI
 
 struct MainScreenView: View {
 
-    @StateObject var viewModel = MainScreenViewModel()
+    @StateObject var viewModel: MainScreenViewModel
+
+    init(profileManager: ProfileManager) {
+        _viewModel = StateObject(wrappedValue: MainScreenViewModel(profileManager: profileManager))
+    }
 
     var body: some View {
         VStack {
@@ -16,22 +20,27 @@ struct MainScreenView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.top, 30)
-            Text("Babki")
+            Text(viewModel.activeProfileName)
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(10)
             Spacer()
             SystemButton(title: "Start Your Day") {
-                print("Hello, World!")
+                viewModel.startDay()
             }
             .padding(.bottom, 34)
         }
-        .onAppear() {
+        .onAppear {
             viewModel.updateDateText()
         }
     }
 }
 
+
 #Preview {
-    MainScreenView()
+    let profileManager = ProfileManager()
+    let viewModel = MainScreenViewModel(profileManager: profileManager)
+    MainScreenView(profileManager: profileManager)
+        .environmentObject(profileManager)
 }
+

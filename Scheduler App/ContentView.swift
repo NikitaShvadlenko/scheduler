@@ -8,21 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @StateObject
+    private var profileManager = ProfileManager()
+
     var body: some View {
         TabView {
             Tab("Profiles", systemImage: "book.pages") {
                 ProfilesView()
+                    .environmentObject(profileManager)
             }
             Tab("Main", systemImage: "star.fill") {
-                MainScreenView()
+                MainScreenView(profileManager: profileManager)
             }
             Tab("Settings", systemImage: "gearshape.fill") {
                 SettingsView()
             }
-
-
-
         }
+        .modelContainer(for: [Profile.self, ScheduleItem.self])
     }
 }
 
