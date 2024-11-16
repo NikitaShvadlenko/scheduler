@@ -10,10 +10,10 @@ import Foundation
 import SwiftUI
 
 final class MainScreenViewModel: ObservableObject {
-    @Published 
+    @Published
     var dateText: String = ""
 
-    @Published 
+    @Published
     var activeProfileName: String = "No active profile"
 
     private var profileManager: ProfileManager
@@ -22,19 +22,6 @@ final class MainScreenViewModel: ObservableObject {
     init(profileManager: ProfileManager) {
         self.profileManager = profileManager
         setupBindings()
-    }
-
-    private func setupBindings() {
-        profileManager.$activeProfile
-            .sink { [weak self] profile in
-                guard let self = self else { return }
-                if let profile = profile {
-                    self.activeProfileName = profile.name
-                } else {
-                    self.activeProfileName = "No active profile"
-                }
-            }
-            .store(in: &cancellables)
     }
 }
 
@@ -47,5 +34,21 @@ extension MainScreenViewModel {
 
     func startDay() {
         print("The day has started with \(activeProfileName)!")
+    }
+}
+
+// MARK: - Private
+private extension MainScreenViewModel {
+    func setupBindings() {
+        profileManager.$activeProfile
+            .sink { [weak self] profile in
+                guard let self = self else { return }
+                if let profile = profile {
+                    self.activeProfileName = profile.name
+                } else {
+                    self.activeProfileName = "No active profile"
+                }
+            }
+            .store(in: &cancellables)
     }
 }
