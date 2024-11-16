@@ -16,6 +16,7 @@ final class ProfileManager: ObservableObject {
 
     func addProfile(name: String, description: String) {
         let newProfile = Profile(name: name, description: description)
+        newProfile.modelContext?.insert(newProfile)
     }
 
     func updateProfile(profile: Profile, name: String, description: String) {
