@@ -10,13 +10,13 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Tab("Received", systemImage: "tray.and.arrow.down.fill") {
-                MainScreenView()
-            }
-            Tab("Received", systemImage: "tray.and.arrow.down.fill") {
+            Tab("Profiles", systemImage: "book.pages") {
                 ProfilesView()
             }
-            Tab("Received", systemImage: "tray.and.arrow.down.fill") {
+            Tab("Main", systemImage: "star.fill") {
+                MainScreenView()
+            }
+            Tab("Settings", systemImage: "gearshape.fill") {
                 SettingsView()
             }
 
