@@ -10,9 +10,11 @@ import Foundation
 import SwiftUI
 
 final class MainScreenViewModel: ObservableObject {
-    @Published var dateText: String = ""
-    @Published var activeProfileName: String = "No active profile"
-    @Published var activeProfileDescription: String = ""
+    @Published 
+    var dateText: String = ""
+
+    @Published 
+    var activeProfileName: String = "No active profile"
 
     private var profileManager: ProfileManager
     private var cancellables = Set<AnyCancellable>()
@@ -28,10 +30,8 @@ final class MainScreenViewModel: ObservableObject {
                 guard let self = self else { return }
                 if let profile = profile {
                     self.activeProfileName = profile.name
-                    self.activeProfileDescription = profile.profileDescription
                 } else {
                     self.activeProfileName = "No active profile"
-                    self.activeProfileDescription = ""
                 }
             }
             .store(in: &cancellables)
