@@ -32,7 +32,7 @@ final class ProfileManager: ObservableObject {
         }
     }
 
-    func setActiveProfile(profile: Profile) {
+    func setActiveProfile(profile: Profile?) {
         activeProfile = profile
     }
 }
