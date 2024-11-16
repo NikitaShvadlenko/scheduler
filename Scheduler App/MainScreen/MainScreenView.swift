@@ -5,15 +5,20 @@
 //  Created by Nikita Shvad on 09.11.2024.
 //
 import SwiftUI
+import _SwiftData_SwiftUI
 
 struct MainScreenView: View {
-
-    @State var viewModel: MainScreenViewModel
-
+    @StateObject var viewModel: MainScreenViewModel
+    
+    @Query(sort: \Profile.name, order: .forward)
+    private var profiles: [Profile]
+    
+    @State private var selectedProfile: Profile?
+    
     init(profileManager: ProfileManager) {
-        viewModel = MainScreenViewModel(profileManager: profileManager)
+        _viewModel = StateObject(wrappedValue: MainScreenViewModel(profileManager: profileManager))
     }
-
+    
     var body: some View {
         VStack {
             Text(viewModel.dateText)

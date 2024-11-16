@@ -7,23 +7,22 @@
 import SwiftUI
 import SwiftData
 
-import SwiftUI
-import SwiftData
-
 struct ProfilesView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var viewModel = ProfilesViewModel()
     @State private var isPresentingAddProfile = false
+
+    @Query(sort: \Profile.name, order: .forward)
+    private var profiles: [Profile]
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.profiles) { profile in
+                ForEach(profiles) { profile in
                     NavigationLink(destination: ProfileDetailView(profile: profile)) {
                         Text(profile.name)
                     }
                 }
-                .onDelete(perform: viewModel.deleteProfiles)
+                .onDelete(perform: deleteProfiles)
             }
             .navigationTitle("Profiles")
             .toolbar {
@@ -41,9 +40,13 @@ struct ProfilesView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.setModelContext(modelContext)
+    }
+
+    private func deleteProfiles(at offsets: IndexSet) {
+        for index in offsets {
+            let profile = profiles[index]
+            modelContext.delete(profile)
         }
+         try? modelContext.save()
     }
 }
-

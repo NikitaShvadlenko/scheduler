@@ -6,12 +6,10 @@
 //
 import Combine
 import Foundation
-import Observation
 
-@Observable
-final class MainScreenViewModel {
-    var dateText: String = ""
-    var activeProfileName: String = "No active profile"
+final class MainScreenViewModel: ObservableObject {
+    @Published var dateText: String = ""
+    @Published var activeProfileName: String = "No active profile"
 
     private var profileManager: ProfileManager
     private var cancellables = Set<AnyCancellable>()
@@ -20,10 +18,7 @@ final class MainScreenViewModel {
         self.profileManager = profileManager
         setupBindings()
     }
-}
 
-// MARK: - Public Methods
-extension MainScreenViewModel {
     func updateDateText() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM"
@@ -33,20 +28,16 @@ extension MainScreenViewModel {
     func startDay() {
         print("The day has started with \(activeProfileName)!")
     }
-}
 
-// MARK: - Private Methods
-private extension MainScreenViewModel {
-    func setupBindings() {
+    func setActiveProfile(_ profile: Profile?) {
+        profileManager.setActiveProfile(profile: profile)
+    }
+
+    private func setupBindings() {
         profileManager.$activeProfile
             .receive(on: DispatchQueue.main)
             .sink { [weak self] profile in
-                guard let self = self else { return }
-                if let profile = profile {
-                    self.activeProfileName = profile.name
-                } else {
-                    self.activeProfileName = "No active profile"
-                }
+                self?.activeProfileName = profile?.name ?? "No active profile"
             }
             .store(in: &cancellables)
     }
