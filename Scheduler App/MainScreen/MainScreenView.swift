@@ -39,6 +39,14 @@ struct MainScreenView: View {
 #Preview {
     let profileManager = ProfileManager()
     let viewModel = MainScreenViewModel(profileManager: profileManager)
+
     MainScreenView(profileManager: profileManager)
-        .environmentObject(profileManager)
+        .onAppear {
+            profileManager.setActiveProfile(
+                profile: Profile(
+                    name: "Profile 1",
+                    description: "This is the active profile"
+                )
+            )
+        }
 }
