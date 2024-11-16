@@ -38,8 +38,6 @@ struct MainScreenView: View {
 
 #Preview {
     let profileManager = ProfileManager()
-    let viewModel = MainScreenViewModel(profileManager: profileManager)
-
     MainScreenView(profileManager: profileManager)
         .onAppear {
             profileManager.setActiveProfile(
