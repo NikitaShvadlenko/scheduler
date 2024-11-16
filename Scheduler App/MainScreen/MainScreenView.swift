@@ -8,10 +8,10 @@ import SwiftUI
 
 struct MainScreenView: View {
 
-    @StateObject var viewModel: MainScreenViewModel
+    @State var viewModel: MainScreenViewModel
 
     init(profileManager: ProfileManager) {
-        _viewModel = StateObject(wrappedValue: MainScreenViewModel(profileManager: profileManager))
+        viewModel = MainScreenViewModel(profileManager: profileManager)
     }
 
     var body: some View {

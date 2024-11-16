@@ -6,11 +6,12 @@
 //
 import Combine
 import Foundation
-import SwiftUI
+import Observation
 
-final class MainScreenViewModel: ObservableObject {
-    @Published var dateText: String = ""
-    @Published var activeProfileName: String = "No active profile"
+@Observable
+final class MainScreenViewModel {
+    var dateText: String = ""
+    var activeProfileName: String = "No active profile"
 
     private var profileManager: ProfileManager
     private var cancellables = Set<AnyCancellable>()

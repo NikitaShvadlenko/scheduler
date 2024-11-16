@@ -9,15 +9,18 @@ import Foundation
 import SwiftData
 
 @Model
-final class Profile {
+final class Profile: Identifiable {
     @Attribute(.unique) var id: UUID
     var name: String
     var profileDescription: String
     var schedule: [ScheduleItem] = []
+    var isActive: Bool = false
 
-    init(name: String, description: String) {
+    init(name: String, description: String, isActive: Bool = false) {
         self.id = UUID()
         self.name = name
         self.profileDescription = description
+        self.isActive = isActive
     }
 }
+
